@@ -22,8 +22,7 @@ Route::group(['namespace' => 'Blog', 'prefix' => 'blog'],
     });
 //>Админка блога
 $groupData = [
-    'namespace' => 'Blog\Admin',
-    'prefix' => 'admin/blog',
+    'namespace' => 'Blog\Admin', 'prefix' => 'admin/blog',
 ];
 Route::group($groupData,
     function(){
@@ -31,7 +30,6 @@ Route::group($groupData,
         $methods = ['index', 'edit', 'update', 'create', 'store',];
         Route::resource('categories', 'CategoryController')->only($methods)
              ->names('blog.admin.categories');
-
         //BlogPost
         Route::resource('posts', 'PostController')->except(['show'])
              ->names('blog.admin.posts');
