@@ -33,7 +33,6 @@ class CategoryController extends BaseController
     public function index()
     {
         $paginator = $this->blogCategoryRepository->getAllWithPaginate(5);
-
         return view('blog.admin.categories.index',
                     compact('paginator'));
     }
@@ -48,7 +47,6 @@ class CategoryController extends BaseController
 
         $item         = new BlogCategory();
         $categoryList = $this->blogCategoryRepository->getForComboBox();
-
         return view('blog.admin.categories.edit',
                     compact('item', 'categoryList'));
     }
@@ -67,10 +65,8 @@ class CategoryController extends BaseController
         if(empty($data['slug'])){
             $data['slug'] = str_slug($data['title']);
         }
-        
         //Создаст объект но не добавит в БД
         $item = (new BlogCategory())->create($data);
-
         if($item){
             return redirect()->route('blog.admin.categories.edit', [$item->id])
                              ->with(['success' => 'Успешно сохранено']);
@@ -85,18 +81,17 @@ class CategoryController extends BaseController
      *
      * Show the form for editing the specified resource.
      *
-     * @param  int                   $id
-     * @param BlogCategoryRepository $categoryRepository
+     * @param  int $id
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, BlogCategoryRepository $categoryRepository)
+    public function edit($id)
     {
-        $item = $categoryRepository->getEdit($id);
+        $item = $this->blogCategoryRepository->getEdit($id);
         if(empty($item)){
             abort('404');
         }
-        $categoryList = $categoryRepository->getForComboBox();
+        $categoryList = $this->blogCategoryRepository->getForComboBox();
         return view('blog.admin.categories.edit',
                     compact('item', 'categoryList'));
     }
@@ -113,19 +108,15 @@ class CategoryController extends BaseController
     {
 
         $item = $this->blogCategoryRepository->getEdit($id);
-
         if(empty($item)){
             return back()->withErrors(['msg' => "Запись id=[{$id}] не найдена"])
                          ->withInput();
         }
-
         $data = $request->all();
         if(empty($data['slug'])){
             $data['slug'] = str_slug($data['title']);
         }
-        
         $result = $item->update($data);
-
         if($result){
             return redirect()->route('blog.admin.categories.edit', $item->id)
                              ->with(['success' => 'Успешно сохранено']);

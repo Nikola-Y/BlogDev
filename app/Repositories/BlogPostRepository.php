@@ -21,11 +21,29 @@ class BlogPostRepository extends CoreRepository
     public function getAllWithPaginate($perPage = Null)
     {
         $columns = [
-            'id', 'title', 'slug', 'is_published', 'published_at', 'user_id',
+            'id',
+            'title',
+            'slug',
+            'is_published',
+            'published_at',
+            'user_id',
             'category_id',
         ];
         $result  = $this->startConditions()->select($columns)
-                        ->orderBy('id', 'DESC')->with(['category:id,title', 'user:id,name'])->paginate($perPage);
+                        ->orderBy('id', 'DESC')
+                        ->with(['category:id,title', 'user:id,name'])
+                        ->paginate($perPage);
+
         return $result;
+    }
+
+    /** Получить модель для редактирвоания в админке
+     * @param int $id
+     *
+     * @return Model
+     */
+    public function getEdit($id)
+    {
+        return $this->startConditions()->find($id);
     }
 }
