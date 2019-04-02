@@ -17,6 +17,17 @@ class BlogCategoryObserver
         //
     }
 
+    public function creating(BlogCategory $blogCategory)
+    {
+        $this->setSlug($blogCategory);
+    }
+
+    protected function setSlug(BlogCategory $blogCategory)
+    {
+        if(empty($blogCategory->slug)){
+            $blogCategory->slug = \Str::slug($blogCategory->title);
+        }
+    }
     /**
      * Handle the blog category "updated" event.
      *
@@ -26,6 +37,14 @@ class BlogCategoryObserver
     public function updated(BlogCategory $blogCategory)
     {
         //
+    }
+
+    /**
+     * @param BlogCategory $blogCategory
+     */
+    public function updating(BlogCategory $blogCategory)
+    {
+        $this->setSlug($blogCategory);
     }
 
     /**
