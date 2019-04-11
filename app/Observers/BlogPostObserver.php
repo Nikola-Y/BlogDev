@@ -23,10 +23,10 @@ class BlogPostObserver
      */
     public function creating(BlogPost $blogPost)
     {
-        $this->setPublishedAt();
-        $this->setSlug();
-        $this->setHtml();
-        $this->setUser();
+        $this->setPublishedAt($blogPost);
+        $this->setSlug($blogPost);
+        $this->setHtml($blogPost);
+        $this->setUser($blogPost);
     }
 
     /**
