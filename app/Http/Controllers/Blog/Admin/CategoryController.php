@@ -62,10 +62,6 @@ class CategoryController extends BaseController
     {
 
         $data = $request->input();
-//        if(empty($data['slug'])){
-//            $data['slug'] = \Str::slug($data['title']);
-//        }
-        //Создаст объект но не добавит в БД
         $item = (new BlogCategory())->create($data);
         if($item){
             return redirect()->route('blog.admin.categories.edit', [$item->id])
