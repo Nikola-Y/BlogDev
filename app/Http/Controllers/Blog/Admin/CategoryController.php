@@ -109,9 +109,6 @@ class CategoryController extends BaseController
                          ->withInput();
         }
         $data = $request->all();
-        if(empty($data['slug'])){
-            $data['slug'] = \Str::slug($data['title']);
-        }
         $result = $item->update($data);
         if($result){
             return redirect()->route('blog.admin.categories.edit', $item->id)

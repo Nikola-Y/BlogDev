@@ -1,4 +1,4 @@
-/.idea/
+.idea/
 /node_modules
 /public/hot
 /public/storage
@@ -13,3 +13,6 @@ yarn-error.log
 /bootstrap/cache/
 /.phpstorm.meta.php
 /_ide_helper.php
+/.env.example
+*.iml
+*.xml
